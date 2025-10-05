@@ -1,0 +1,47 @@
+{
+  "name": "impacthub",
+  "version": "1.0.0",
+  "description": "Web3 Nonprofit Funding Platform",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:api\"",
+    "dev:web": "cd web && npm run dev",
+    "dev:api": "cd api && npm run dev",
+    "build": "npm run build:web && npm run build:api",
+    "build:web": "cd web && npm run build",
+    "build:api": "cd api && npm run build",
+    "start": "concurrently \"npm run start:web\" \"npm run start:api\"",
+    "start:web": "cd web && npm run start",
+    "start:api": "cd api && npm run start",
+    "deploy": "./deploy.sh",
+    "deploy:vercel": "vercel --prod",
+    "deploy:netlify": "cd web && npm run build && netlify deploy --prod --dir=out",
+    "deploy:railway": "railway up",
+    "tunnel": "ngrok http 3000",
+    "setup": "npm install && cd web && npm install && cd ../api && npm install",
+    "db:setup": "cd api && npx prisma generate && npx prisma migrate deploy && npx prisma db seed",
+    "test": "cd web && npm run test && cd ../api && npm run test",
+    "lint": "cd web && npm run lint && cd ../api && npm run lint",
+    "clean": "rm -rf web/node_modules web/.next web/out api/node_modules api/dist"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/impacthub.git"
+  },
+  "keywords": [
+    "web3",
+    "nonprofit",
+    "funding",
+    "blockchain",
+    "decentralized",
+    "impact"
+  ],
+  "author": "ImpactHub Team",
+  "license": "MIT"
+}

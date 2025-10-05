@@ -1,0 +1,328 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String   @id @default(cuid())
+  email             String   @unique
+  name              String?
+  role              Role     @default(DONOR)
+  wallet            String?  @unique
+  reputationScore   Int      @default(50)
+  verificationLevel String   @default("BASIC") // BASIC, VERIFIED, PREMIUM
+  isKycVerified     Boolean  @default(false)
+  lastActiveAt      DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  donations         Donation[]
+  updates           Update[]
+  votes             Vote[]
+  proposals         Proposal[]
+  rateLimits        RateLimit[]
+  challengeSubmissions ChallengeSubmission[]
+  assignedTasks     Task[]
+  taskComments      TaskComment[]
+  projectReports    ProjectReport[]
+}
+
+enum Role {
+  DONOR
+  LEAD
+  ADMIN
+}
+
+model Project {
+  id          String     @id @default(cuid())
+  title       String
+  mission     String
+  category    String
+  coverImage  String?
+  coverVideo  String?
+  goal        Int        @default(0)
+  raised      Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  milestones  Milestone[]
+  updates     Update[]
+  donations   Donation[]
+  roadmaps    ProjectRoadmap[]
+  timelines   ProjectTimeline[]
+  reports     ProjectReport[]
+}
+
+model Milestone {
+  id          String   @id @default(cuid())
+  title       String
+  amount      Int
+  dueDate     DateTime?
+  released    Boolean  @default(false)
+  evidenceCid String?
+  project     Project  @relation(fields: [projectId], references: [id])
+  projectId   String
+}
+
+model Update {
+  id          String   @id @default(cuid())
+  content     String
+  mediaUrl    String?
+  mediaType   String? // image|video
+  createdAt   DateTime @default(now())
+  project     Project  @relation(fields: [projectId], references: [id])
+  projectId   String
+  author      User?    @relation(fields: [authorId], references: [id])
+  authorId    String?
+}
+
+model Donation {
+  id          String   @id @default(cuid())
+  amount      Int
+  currency    String
+  txRef       String?  // on-chain tx hash or processor id
+  createdAt   DateTime @default(now())
+  project     Project  @relation(fields: [projectId], references: [id])
+  projectId   String
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String?
+}
+
+model Proposal {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  category    String
+  status      ProposalStatus @default(DRAFT)
+  votesFor    Int      @default(0)
+  votesAgainst Int     @default(0)
+  totalVotes  Int      @default(0)
+  votingStart DateTime?
+  votingEnd   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
+  votes       Vote[]
+}
+
+enum ProposalStatus {
+  DRAFT
+  PENDING_REVIEW
+  ACTIVE
+  PASSED
+  REJECTED
+  EXPIRED
+}
+
+model Vote {
+  id         String   @id @default(cuid())
+  voteType   VoteType
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  proposal   Proposal @relation(fields: [proposalId], references: [id])
+  proposalId String
+
+  @@unique([userId, proposalId]) // One vote per user per proposal
+}
+
+enum VoteType {
+  FOR
+  AGAINST
+}
+
+model RateLimit {
+  id        String   @id @default(cuid())
+  action    String   // donation, vote, proposal, etc.
+  count     Int      @default(0)
+  windowStart DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@unique([userId, action])
+}
+
+model TrendingTopic {
+  id                  String   @id @default(cuid())
+  title               String
+  description         String
+  category            String
+  source              String
+  popularity          Float
+  sentiment           String   // positive, negative, neutral
+  keywords            String   // JSON string array
+  impact              String
+  suggestedChallenges String   // JSON string array
+  createdAt           DateTime @default(now())
+  lastUpdated         DateTime @updatedAt
+}
+
+model Challenge {
+  id            String   @id @default(cuid())
+  title         String
+  description   String
+  category      String
+  difficulty    String   // Easy, Medium, Hard
+  duration      Int      // in days
+  points        Int
+  requirements  String   // JSON string array
+  rewards       String   // JSON string array
+  impact        String
+  tags          String   // JSON string array
+  isActive      Boolean  @default(true)
+  participants  Int      @default(0)
+  completionRate Float    @default(0)
+  deadline      DateTime
+  relatedTopic  String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  submissions   ChallengeSubmission[]
+}
+
+model ChallengeSubmission {
+  id          String   @id @default(cuid())
+  challengeId String
+  userId      String
+  content     String
+  media       String   // JSON string array
+  impact      String
+  isVerified  Boolean  @default(false)
+  likes       Int      @default(0)
+  createdAt   DateTime @default(now())
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model ProjectRoadmap {
+  id          String   @id @default(cuid())
+  projectId   String
+  title       String
+  description String
+  startDate   DateTime
+  endDate     DateTime
+  status      RoadmapStatus @default(PLANNED)
+  priority    Priority @default(MEDIUM)
+  progress    Float    @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  project     Project  @relation(fields: [projectId], references: [id])
+  tasks       Task[]
+}
+
+enum RoadmapStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  ON_HOLD
+  CANCELLED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model Task {
+  id          String   @id @default(cuid())
+  roadmapId   String
+  title       String
+  description String
+  status      TaskStatus @default(TODO)
+  priority    Priority @default(MEDIUM)
+  assigneeId  String?
+  dueDate     DateTime?
+  completedAt DateTime?
+  progress    Float    @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  roadmap     ProjectRoadmap @relation(fields: [roadmapId], references: [id])
+  assignee    User?    @relation(fields: [assigneeId], references: [id])
+  comments    TaskComment[]
+  attachments TaskAttachment[]
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  REVIEW
+  COMPLETED
+  CANCELLED
+}
+
+model TaskComment {
+  id        String   @id @default(cuid())
+  taskId    String
+  userId    String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  task      Task     @relation(fields: [taskId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model TaskAttachment {
+  id        String   @id @default(cuid())
+  taskId    String
+  fileName  String
+  fileUrl   String
+  fileType  String
+  fileSize  Int
+  uploadedBy String
+  createdAt DateTime @default(now())
+  task      Task     @relation(fields: [taskId], references: [id])
+}
+
+model ProjectTimeline {
+  id          String   @id @default(cuid())
+  projectId   String
+  title       String
+  description String
+  startDate   DateTime
+  endDate     DateTime
+  milestone   Boolean  @default(false)
+  status      TimelineStatus @default(PLANNED)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  project     Project  @relation(fields: [projectId], references: [id])
+}
+
+enum TimelineStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  DELAYED
+  CANCELLED
+}
+
+model ProjectReport {
+  id          String   @id @default(cuid())
+  projectId   String
+  title       String
+  content     String
+  reportType  ReportType
+  metrics     String   // JSON string for metrics data
+  attachments String   // JSON string array for file URLs
+  createdBy   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  project     Project  @relation(fields: [projectId], references: [id])
+  author      User     @relation(fields: [createdBy], references: [id])
+}
+
+enum ReportType {
+  PROGRESS
+  FINANCIAL
+  IMPACT
+  MILESTONE
+  QUARTERLY
+  ANNUAL
+}
