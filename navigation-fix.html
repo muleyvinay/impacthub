@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImpactHub - Navigation Fix</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Compact Navigation Styles */
+        .nav-compact {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-item {
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .nav-item:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+        
+        .nav-icon-only {
+            padding: 0.5rem;
+            min-width: 2.5rem;
+            text-align: center;
+        }
+        
+        .nav-compact-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        /* Responsive Navigation */
+        @media (max-width: 1024px) {
+            .nav-desktop {
+                display: none;
+            }
+            .nav-tablet {
+                display: flex;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-tablet {
+                display: none;
+            }
+            .nav-mobile {
+                display: flex;
+            }
+        }
+        
+        @media (min-width: 1025px) {
+            .nav-tablet, .nav-mobile {
+                display: none;
+            }
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            min-width: 200px;
+            z-index: 50;
+        }
+        
+        .dropdown-item {
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.2s ease;
+        }
+        
+        .dropdown-item:hover {
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2 flex-shrink-0">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">IH</span>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-gray-900">ImpactHub</h1>
+                        <p class="text-xs text-gray-600 hidden sm:block">Web3 Platform</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation (Full) -->
+                <div class="nav-desktop hidden lg:flex items-center space-x-1">
+                    <a href="/" class="nav-item nav-compact-text">
+                        <span class="mr-1">🏠</span>Home
+                    </a>
+                    <a href="/projects/" class="nav-item nav-compact-text">
+                        <span class="mr-1">📋</span>Projects
+                    </a>
+                    <a href="/spaces/" class="nav-item nav-compact-text">
+                        <span class="mr-1">🌐</span>Spaces
+                    </a>
+                    <a href="/impact/" class="nav-item nav-compact-text">
+                        <span class="mr-1">📊</span>Impact
+                    </a>
+                    <a href="/learn/" class="nav-item nav-compact-text">
+                        <span class="mr-1">📚</span>Learn
+                    </a>
+                    <a href="/community/" class="nav-item nav-compact-text">
+                        <span class="mr-1">👥</span>Community
+                    </a>
+                    <a href="/challenges/" class="nav-item nav-compact-text">
+                        <span class="mr-1">🏆</span>Challenges
+                    </a>
+                    <a href="/trending/" class="nav-item nav-compact-text">
+                        <span class="mr-1">🔥</span>Trending
+                    </a>
+                </div>
+                
+                <!-- Tablet Navigation (Compact) -->
+                <div class="nav-tablet hidden lg:hidden md:flex items-center space-x-1">
+                    <a href="/" class="nav-item nav-icon-only" title="Home">
+                        🏠
+                    </a>
+                    <a href="/projects/" class="nav-item nav-icon-only" title="Projects">
+                        📋
+                    </a>
+                    <a href="/spaces/" class="nav-item nav-icon-only" title="Spaces">
+                        🌐
+                    </a>
+                    <a href="/impact/" class="nav-item nav-icon-only" title="Impact">
+                        📊
+                    </a>
+                    <a href="/learn/" class="nav-item nav-icon-only" title="Learn">
+                        📚
+                    </a>
+                    <a href="/community/" class="nav-item nav-icon-only" title="Community">
+                        👥
+                    </a>
+                    <div class="relative">
+                        <button class="nav-item nav-icon-only" onclick="toggleDropdown()" title="More">
+                            ⋯
+                        </button>
+                        <div id="dropdown" class="dropdown-menu hidden">
+                            <a href="/challenges/" class="dropdown-item">
+                                <span>🏆</span>Challenges
+                            </a>
+                            <a href="/trending/" class="dropdown-item">
+                                <span>🔥</span>Trending
+                            </a>
+                            <a href="/achievements/" class="dropdown-item">
+                                <span>🎖️</span>Achievements
+                            </a>
+                            <a href="/account/" class="dropdown-item">
+                                <span>👤</span>Account
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile Navigation (Minimal) -->
+                <div class="nav-mobile flex items-center space-x-1">
+                    <a href="/" class="nav-item nav-icon-only" title="Home">
+                        🏠
+                    </a>
+                    <a href="/projects/" class="nav-item nav-icon-only" title="Projects">
+                        📋
+                    </a>
+                    <a href="/spaces/" class="nav-item nav-icon-only" title="Spaces">
+                        🌐
+                    </a>
+                    <div class="relative">
+                        <button class="nav-item nav-icon-only" onclick="toggleMobileDropdown()" title="More">
+                            ⋯
+                        </button>
+                        <div id="mobileDropdown" class="dropdown-menu hidden">
+                            <a href="/impact/" class="dropdown-item">
+                                <span>📊</span>Impact
+                            </a>
+                            <a href="/learn/" class="dropdown-item">
+                                <span>📚</span>Learn
+                            </a>
+                            <a href="/community/" class="dropdown-item">
+                                <span>👥</span>Community
+                            </a>
+                            <a href="/challenges/" class="dropdown-item">
+                                <span>🏆</span>Challenges
+                            </a>
+                            <a href="/trending/" class="dropdown-item">
+                                <span>🔥</span>Trending
+                            </a>
+                            <a href="/achievements/" class="dropdown-item">
+                                <span>🎖️</span>Achievements
+                            </a>
+                            <a href="/account/" class="dropdown-item">
+                                <span>👤</span>Account
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Auth Buttons -->
+                <div class="flex items-center space-x-2 flex-shrink-0">
+                    <a href="/auth/" class="text-gray-700 hover:text-blue-600 transition-colors text-sm hidden sm:block">Sign In</a>
+                    <a href="/auth/" class="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
+                        Get Started
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">Navigation Fix Options</h1>
+                <p class="text-xl text-gray-600 mb-8">Choose the best navigation solution for your ImpactHub</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                    <!-- Option 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Option 1: Compact Navigation</h3>
+                        <p class="text-gray-600 mb-4">Icons + short labels, fits all screen sizes</p>
+                        <ul class="text-sm text-gray-500 space-y-1">
+                            <li>✅ Fits in 1200px viewport</li>
+                            <li>✅ Responsive breakpoints</li>
+                            <li>✅ Touch-friendly</li>
+                            <li>✅ Clean design</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Option 2 -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Option 2: Dropdown Menu</h3>
+                        <p class="text-gray-600 mb-4">Group items under "More" dropdown</p>
+                        <ul class="text-sm text-gray-500 space-y-1">
+                            <li>✅ Saves horizontal space</li>
+                            <li>✅ Organized grouping</li>
+                            <li>✅ Scalable</li>
+                            <li>⚠️ Requires extra click</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Option 3 -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Option 3: Two-Row Nav</h3>
+                        <p class="text-gray-600 mb-4">Split navigation into two rows</p>
+                        <ul class="text-sm text-gray-500 space-y-1">
+                            <li>✅ Shows all items</li>
+                            <li>✅ No hidden content</li>
+                            <li>⚠️ Takes more vertical space</li>
+                            <li>⚠️ Less common pattern</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function toggleMobileDropdown() {
+            const dropdown = document.getElementById('mobileDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdowns = document.querySelectorAll('.dropdown-menu');
+            dropdowns.forEach(dropdown => {
+                if (!dropdown.contains(event.target) && !event.target.closest('button')) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
