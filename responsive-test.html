@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImpactHub - Responsive Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Mobile Navigation */
+        .mobile-menu {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .project-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.75rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">IH</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">ImpactHub</h1>
+                        <p class="text-xs text-gray-600">Web3 Impact Platform</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="desktop-nav hidden md:flex items-center space-x-8">
+                    <a href="/" class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors">
+                        <span>🏠</span>
+                        <span>Home</span>
+                    </a>
+                    <a href="/projects/" class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors">
+                        <span>📋</span>
+                        <span>Projects</span>
+                    </a>
+                    <a href="/spaces/" class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors">
+                        <span>🌐</span>
+                        <span>Spaces</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Auth -->
+                <div class="desktop-nav hidden md:flex items-center space-x-4">
+                    <a href="/auth/" class="text-gray-700 hover:text-blue-600 transition-colors">Sign In</a>
+                    <a href="/auth/" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        Get Started 🚀
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu md:hidden" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Mobile Navigation Menu -->
+            <div id="mobileMenu" class="mobile-menu hidden md:hidden">
+                <div class="nav-links py-4 border-t border-gray-200">
+                    <a href="/" class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors py-2">
+                        <span>🏠</span>
+                        <span>Home</span>
+                    </a>
+                    <a href="/projects/" class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors py-2">
+                        <span>📋</span>
+                        <span>Projects</span>
+                    </a>
+                    <a href="/spaces/" class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors py-2">
+                        <span>🌐</span>
+                        <span>Spaces</span>
+                    </a>
+                    <div class="pt-4 border-t border-gray-200 mt-4">
+                        <a href="/auth/" class="block text-gray-700 hover:text-blue-600 transition-colors py-2">Sign In</a>
+                        <a href="/auth/" class="block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-center mt-2">
+                            Get Started 🚀
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto text-center">
+                <h1 class="hero-title text-5xl md:text-6xl font-extrabold text-gray-900 mb-6">
+                    Make a <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Real Impact</span>
+                </h1>
+                
+                <p class="hero-subtitle text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                    Join the Web3 revolution in nonprofit funding. Discover, support, and track transparent, decentralized initiatives that are changing the world with blockchain technology.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/auth/" class="bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-blue-700 transition-all duration-300">
+                        Get Started 🚀
+                    </a>
+                    <a href="/projects/" class="bg-white text-gray-700 px-8 py-4 rounded-xl font-semibold border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300">
+                        Explore Projects 🔍
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="feature-grid grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="p-8 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl">
+                        <div class="text-4xl mb-4">🔒</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Transparent</h3>
+                        <p class="text-gray-600">Every donation is tracked on-chain with complete transparency and immutable records</p>
+                    </div>
+                    
+                    <div class="p-8 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl">
+                        <div class="text-4xl mb-4">🎯</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Impact-Focused</h3>
+                        <p class="text-gray-600">Support verified projects with measurable outcomes and real-world impact</p>
+                    </div>
+                    
+                    <div class="p-8 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl">
+                        <div class="text-4xl mb-4">🏆</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Rewarding</h3>
+                        <p class="text-gray-600">Earn NFT badges and governance tokens for your contributions and impact</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-4">Live Impact Dashboard</h3>
+                    <p class="text-xl text-gray-600">Real-time statistics from our global community</p>
+                </div>
+                
+                <div class="stats-grid grid grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-blue-600 mb-2">$2.4M</div>
+                        <div class="text-lg font-semibold text-gray-900 mb-1">Total Raised</div>
+                        <div class="text-sm text-green-600">+12% this month</div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-green-600 mb-2">1,247</div>
+                        <div class="text-lg font-semibold text-gray-900 mb-1">Active Projects</div>
+                        <div class="text-sm text-green-600">+8% this month</div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-purple-600 mb-2">15.2K</div>
+                        <div class="text-lg font-semibold text-gray-900 mb-1">Community Members</div>
+                        <div class="text-sm text-green-600">+23% this month</div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-orange-600 mb-2">89%</div>
+                        <div class="text-lg font-semibold text-gray-900 mb-1">Success Rate</div>
+                        <div class="text-sm text-green-600">+3% this month</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const button = document.querySelector('.mobile-menu');
+            
+            if (!menu.contains(event.target) && !button.contains(event.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

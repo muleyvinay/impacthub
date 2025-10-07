@@ -1,5 +1,5 @@
 [build]
-  publish = "web/out"
+  publish = "."
   command = "cd web && npm run build"
 
 [build.environment]
