@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo "🚀 ImpactHub - Complete Deployment Guide"
+echo "🚀 PactaImpact - Complete Deployment Guide"
 echo "========================================"
 echo ""
 
-echo "🎯 **Your ImpactHub is ready for deployment!**"
+echo "🎯 **Your PactaImpact is ready for deployment!**"
 echo ""
 echo "📱 **Current Status:**"
 echo "✅ Code prepared and committed"
@@ -108,4 +108,4 @@ echo "cat FREE_HOSTING_GUIDE.md"
 echo ""
 
 echo "🚀 **Ready to deploy? Follow the steps above!**"
-echo "Your ImpactHub will be live on the internet in minutes! 🌟"
+echo "Your PactaImpact will be live on the internet in minutes! 🌟"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🌐 ImpactHub Quick Public Deployment"
+echo "🌐 PactaImpact Quick Public Deployment"
 echo "==================================="
 echo ""
 
@@ -61,7 +61,7 @@ if [ "$FRONTEND_RUNNING" = false ] || [ "$API_RUNNING" = false ]; then
 fi
 
 echo ""
-echo "🎉 ImpactHub is now accessible!"
+echo "🎉 PactaImpact is now accessible!"
 echo ""
 echo "📱 Local Access:"
 echo "   🌐 Frontend: http://localhost:3000"

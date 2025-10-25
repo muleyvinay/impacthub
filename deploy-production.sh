@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 ImpactHub Production Deployment"
+echo "🚀 PactaImpact Production Deployment"
 echo "================================="
 echo ""
 

@@ -1,7 +1,7 @@
 {
-  "name": "impacthub-static",
+  "name": "pactaimpact-static",
   "version": "1.0.0",
-  "description": "ImpactHub - Web3 Nonprofit Funding Platform",
+  "description": "PactaImpact - Web3 Nonprofit Funding Platform",
   "scripts": {
     "build": "echo 'Static site - no build needed'"
   }

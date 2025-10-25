@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🆓 ImpactHub Free Hosting Deployment"
+echo "🆓 PactaImpact Free Hosting Deployment"
 echo "==================================="
 echo ""
 

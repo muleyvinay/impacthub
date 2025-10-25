@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🌐 ImpactHub Public Hosting Setup"
+echo "🌐 PactaImpact Public Hosting Setup"
 echo "================================="
 echo ""
 
@@ -94,7 +94,7 @@ if [ -z "$NGROK_URL" ]; then
 fi
 
 echo ""
-echo "🎉 ImpactHub is now publicly accessible!"
+echo "🎉 PactaImpact is now publicly accessible!"
 echo "🌐 Public URL: $NGROK_URL"
 echo "📱 Share this URL with anyone to test the application"
 echo ""

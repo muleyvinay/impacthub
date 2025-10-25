@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🔗 Connect ImpactHub to GitHub"
+echo "🔗 Connect PactaImpact to GitHub"
 echo "=============================="
 echo ""
 

@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# 🚀 ImpactHub Deployment Script
+# 🚀 PactaImpact Deployment Script
 # This script helps deploy the application to various platforms
 
 set -e
 
-echo "🚀 ImpactHub Deployment Script"
+echo "🚀 PactaImpact Deployment Script"
 echo "================================"
 
 # Colors for output
