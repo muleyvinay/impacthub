@@ -411,20 +411,32 @@
             const email = formData.get('email');
             const password = formData.get('password');
             
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showMessage('Please enter a valid email address', 'error');
+                return;
+            }
+            
             // Simulate login process
             if (email && password) {
-                alert('Login successful! Redirecting to dashboard...');
+                showMessage('Login successful! Redirecting to dashboard...', 'success');
+                
                 // Store user data in localStorage
                 localStorage.setItem('user', JSON.stringify({
-                    name: 'John Doe',
+                    name: email.split('@')[0], // Use email prefix as name
                     email: email,
                     role: 'donor',
-                    isAuthenticated: true
+                    isAuthenticated: true,
+                    loginTime: new Date().toISOString()
                 }));
-                // Redirect to dashboard or home
-                window.location.href = '/';
+                
+                // Redirect to dashboard after a short delay
+                setTimeout(() => {
+                    window.location.href = '/dashboard.html';
+                }, 1500);
             } else {
-                alert('Please fill in all fields');
+                showMessage('Please fill in all fields', 'error');
             }
         });
 
@@ -437,17 +449,32 @@
             const confirmPassword = formData.get('confirmPassword');
             const role = formData.get('role');
             
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showMessage('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // Validate password strength
+            if (password.length < 6) {
+                showMessage('Password must be at least 6 characters long', 'error');
+                return;
+            }
+            
             if (password !== confirmPassword) {
-                alert('Passwords do not match');
+                showMessage('Passwords do not match', 'error');
                 return;
             }
             
             if (name && email && password && role) {
-                alert('Account created successfully! Please log in.');
-                // Switch to login form
-                loginBtn.click();
+                showMessage('Account created successfully! Please log in.', 'success');
+                // Switch to login form after a delay
+                setTimeout(() => {
+                    loginBtn.click();
+                }, 1500);
             } else {
-                alert('Please fill in all fields');
+                showMessage('Please fill in all fields', 'error');
             }
         });
 
@@ -456,9 +483,71 @@
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 const provider = btn.textContent.trim();
-                alert(`${provider} login would be implemented here`);
+                showMessage(`${provider} login would be implemented here`, 'info');
             });
         });
+
+        // Message display function
+        function showMessage(message, type = 'info') {
+            // Remove existing messages
+            const existingMessage = document.querySelector('.message-toast');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+
+            // Create message element
+            const messageEl = document.createElement('div');
+            messageEl.className = `message-toast fixed top-4 right-4 z-50 px-6 py-4 rounded-xl shadow-lg backdrop-blur-sm transition-all duration-300 transform translate-x-full`;
+            
+            // Set colors based on type
+            let bgColor, textColor, icon;
+            switch(type) {
+                case 'success':
+                    bgColor = 'bg-green-500/90';
+                    textColor = 'text-white';
+                    icon = '✅';
+                    break;
+                case 'error':
+                    bgColor = 'bg-red-500/90';
+                    textColor = 'text-white';
+                    icon = '❌';
+                    break;
+                case 'info':
+                    bgColor = 'bg-blue-500/90';
+                    textColor = 'text-white';
+                    icon = 'ℹ️';
+                    break;
+                default:
+                    bgColor = 'bg-gray-500/90';
+                    textColor = 'text-white';
+                    icon = 'ℹ️';
+            }
+            
+            messageEl.className += ` ${bgColor} ${textColor}`;
+            messageEl.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <span class="text-xl">${icon}</span>
+                    <span class="font-medium">${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(messageEl);
+            
+            // Animate in
+            setTimeout(() => {
+                messageEl.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Auto remove after 4 seconds
+            setTimeout(() => {
+                messageEl.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (messageEl.parentNode) {
+                        messageEl.remove();
+                    }
+                }, 300);
+            }, 4000);
+        }
     </script>
 </body>
 </html>

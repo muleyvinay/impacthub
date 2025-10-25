@@ -145,8 +145,38 @@
                 return;
             }
             
-            const userData = JSON.parse(user);
-            document.getElementById('userName').textContent = `Welcome, ${userData.name || 'User'}`;
+            try {
+                const userData = JSON.parse(user);
+                if (!userData.isAuthenticated) {
+                    window.location.href = '/auth/';
+                    return;
+                }
+                
+                // Update user name display
+                const userName = userData.name || userData.email?.split('@')[0] || 'User';
+                document.getElementById('userName').textContent = `Welcome, ${userName}`;
+                
+                // Update stats based on user data
+                updateUserStats(userData);
+            } catch (e) {
+                console.log('Error parsing user data:', e);
+                window.location.href = '/auth/';
+            }
+        }
+
+        // Update user stats
+        function updateUserStats(userData) {
+            // You can customize these based on user data
+            const stats = {
+                totalDonated: userData.totalDonated || '$2,450',
+                projectsSupported: userData.projectsSupported || '12',
+                nftBadges: userData.nftBadges || '5',
+                impactScore: userData.impactScore || '89%'
+            };
+            
+            // Update the stats display (if elements exist)
+            const totalDonatedEl = document.querySelector('.text-3xl.font-bold.text-blue-600');
+            if (totalDonatedEl) totalDonatedEl.textContent = stats.totalDonated;
         }
 
         // Logout function

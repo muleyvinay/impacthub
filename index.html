@@ -745,12 +745,28 @@
         window.addEventListener('load', function() {
             const user = localStorage.getItem('user');
             if (user) {
-                // Update navigation to show user is logged in
-                const authLinks = document.querySelectorAll('a[href="/auth/"]');
-                authLinks.forEach(link => {
-                    link.textContent = 'Dashboard';
-                    link.href = '/dashboard.html';
-                });
+                try {
+                    const userData = JSON.parse(user);
+                    if (userData.isAuthenticated) {
+                        // Update navigation to show user is logged in
+                        const authLinks = document.querySelectorAll('a[href="/auth/"]');
+                        authLinks.forEach(link => {
+                            link.textContent = 'Dashboard';
+                            link.href = '/dashboard.html';
+                        });
+                        
+                        // Update any "Get Started" buttons to show "Dashboard"
+                        const getStartedBtns = document.querySelectorAll('a[href="/auth/"]');
+                        getStartedBtns.forEach(btn => {
+                            if (btn.textContent.includes('Get Started')) {
+                                btn.textContent = 'Dashboard';
+                                btn.href = '/dashboard.html';
+                            }
+                        });
+                    }
+                } catch (e) {
+                    console.log('Error parsing user data:', e);
+                }
             }
         });
     </script>
