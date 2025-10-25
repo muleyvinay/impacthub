@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - PactaImpact</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2 flex-shrink-0">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">IH</span>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-gray-900">PactaImpact</h1>
+                        <p class="text-xs text-gray-600 hidden sm:block">Web3 Platform</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <span id="userName" class="text-gray-700 text-sm">Welcome, User</span>
+                    <button onclick="logout()" class="text-gray-700 hover:text-blue-600 transition-colors text-sm">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Welcome Section -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">Welcome to Your Dashboard</h1>
+                <p class="text-xl text-gray-600">Manage your impact and track your contributions</p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg hover-lift">
+                    <div class="text-3xl font-bold text-blue-600 mb-2">$2,450</div>
+                    <div class="text-gray-600">Total Donated</div>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg hover-lift">
+                    <div class="text-3xl font-bold text-green-600 mb-2">12</div>
+                    <div class="text-gray-600">Projects Supported</div>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg hover-lift">
+                    <div class="text-3xl font-bold text-purple-600 mb-2">5</div>
+                    <div class="text-gray-600">NFT Badges</div>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg hover-lift">
+                    <div class="text-3xl font-bold text-orange-600 mb-2">89%</div>
+                    <div class="text-gray-600">Impact Score</div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Recent Activity -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Recent Activity</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                <span class="text-green-600">💰</span>
+                            </div>
+                            <div>
+                                <div class="font-medium text-gray-900">Donated $500 to Clean Water Initiative</div>
+                                <div class="text-sm text-gray-500">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                <span class="text-blue-600">🏆</span>
+                            </div>
+                            <div>
+                                <div class="font-medium text-gray-900">Earned "Climate Champion" Badge</div>
+                                <div class="text-sm text-gray-500">1 day ago</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                <span class="text-purple-600">📊</span>
+                            </div>
+                            <div>
+                                <div class="font-medium text-gray-900">Impact report generated</div>
+                                <div class="text-sm text-gray-500">3 days ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Quick Actions</h3>
+                    <div class="space-y-3">
+                        <a href="/projects/" class="block w-full bg-blue-600 text-white py-3 px-4 rounded-lg text-center hover:bg-blue-700 transition-colors">
+                            Browse Projects
+                        </a>
+                        <a href="/community/" class="block w-full bg-green-600 text-white py-3 px-4 rounded-lg text-center hover:bg-green-700 transition-colors">
+                            Join Community
+                        </a>
+                        <a href="/account/" class="block w-full bg-purple-600 text-white py-3 px-4 rounded-lg text-center hover:bg-purple-700 transition-colors">
+                            View Profile
+                        </a>
+                        <a href="/trending/" class="block w-full bg-orange-600 text-white py-3 px-4 rounded-lg text-center hover:bg-orange-700 transition-colors">
+                            Trending Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Check if user is logged in
+        function checkAuth() {
+            const user = localStorage.getItem('user');
+            if (!user) {
+                window.location.href = '/auth/';
+                return;
+            }
+            
+            const userData = JSON.parse(user);
+            document.getElementById('userName').textContent = `Welcome, ${userData.name || 'User'}`;
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = '/auth/';
+        }
+
+        // Initialize dashboard
+        checkAuth();
+    </script>
+</body>
+</html>
